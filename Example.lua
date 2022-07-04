@@ -5,7 +5,7 @@ local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 --[[
     I'm wearing https://www.roblox.com/catalog/4506945409/Corrupt-Demonic-Greatsword and https://www.roblox.com/catalog/4315489767/Demonic-Greatsword
-    The issue with these hats is that they are both named "MeshPartAccessory" but many scripts still use them, many hats for made like this and it can be an issue
+    The issue with these hats is that they are both named "MeshPartAccessory" but many scripts still use them, even though many hats are made like this and it can be an issue
 
     To solve this problem you can use the function GetHats()
 ]]
