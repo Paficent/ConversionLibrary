@@ -51,7 +51,6 @@ Functions = {
             ID = Object.TextureID
         elseif Object:IsA("Accessory") then
             ID = Object:WaitForChild("Handle"):FindFirstChildWhichIsA("SpecialMesh").TextureId
-
         else
             return 'Error - Param "Object" [1] is not a ClassType of "SpecialMesh" or "Part" or "Accessory" or "MeshPart"'
         end
@@ -83,8 +82,7 @@ Functions = {
                     MeshLink = "https://www.roblox.com/library/" .. MeshId,
                     TextureId = TextureId,
                     TextureLink = "https://www.roblox.com/library/" .. TextureId,
-                    Size = Handle.Size,
-                    Object = v
+                    Size = Handle.Size
                 }
             end
         end
@@ -96,12 +94,11 @@ Functions = {
         for i,v in pairs(Hats) do
             for _,Hat in pairs(Character:GetChildren()) do
                 if Hat:IsA("Accessory") then
-                    Handle = v:WaitForChild("Handle")
+                    Handle = Hat:FindFirstChild("Handle")
                     Mesh = Handle:FindFirstChildWhichIsA("SpecialMesh")
 
-                    ID = Functions.GetTextureId(Mesh) -- Get's the mesh's TextureId
-
-                    if Hat.Name == v.Name and ID == Hat.TextureId then
+                    TextureId = Functions.GetTextureId(Mesh)
+                    if Hat.Name == v.Name and TextureId == i then
                         Hat.Name = i
                     end
                 end
