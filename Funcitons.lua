@@ -99,9 +99,9 @@ Functions = {
                     Handle = v:WaitForChild("Handle")
                     Mesh = Handle:FindFirstChildWhichIsA("SpecialMesh")
 
-                    ID = Functions.GetMeshId(Mesh) -- Get's the mesh's TextureId
+                    ID = Functions.GetTextureId(Mesh) -- Get's the mesh's TextureId
 
-                    if Hat.Name == v.Name and ID == i then
+                    if Hat.Name == v.Name and ID == Hat.TextureId then
                         Hat.Name = i
                     end
                 end
