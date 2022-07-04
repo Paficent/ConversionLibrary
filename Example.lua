@@ -30,16 +30,16 @@ ConversionFunctions.RenameHats()
 
 for _,Hat in pairs(Character:GetChildren()) do
     if Hat:IsA("Accessory") then
-        warn(Hat.Name)
+        warn(Hat.Name) -- 4506940486 / 4315250791
     end
 end
 
 -- Final check to see if the naming named everything correctly
-print(Character[4506940486].Handle.SpecialMesh.TextureId)
-print(ConversionFunctions.GetMeshId(Character[4506940486].Handle.SpecialMesh))
+print(Character[4506940486].Handle.SpecialMesh.TextureId) -- 4506940486
+print(ConversionFunctions.GetMeshId(Character[4506940486].Handle.SpecialMesh)) -- 4506940486
 
 ConversionFunctions.RemoveMesh(Character[4506940486]) -- Removes the mesh of the corrupt demonic greatsword
 
 ConversionFunctions.Noclip() -- Could be an object or nil to noclip the entire player
 
-Character[4506940486]:FindFirstChild("Handle"):BreakJoints()
+Character[4506940486]:FindFirstChild("Handle"):BreakJoints() -- Final demonstration showing that with these functions you can make sure you're using the right hat
