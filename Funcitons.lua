@@ -79,4 +79,4 @@ Functions = {
     end
 }
 
-return print(Functions.FindAccessories())
+return Functions
