@@ -10,26 +10,28 @@ local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 
-local Mesh, ID, MeshId
+local Mesh, ID, MeshId, Table
 
 local function split(Input, Seperator) -- Not my function :)
-    local Table = {}
+    Table = {}
     for str in string.gmatch(Input, "([^"..Seperator.."]+)") do
         table.insert(Table, str)
     end
     return Table
 end
 
-local GetMeshId = function(Mesh)
-    if split(Mesh.TextureId, '=')[2] ~= nil then
-        MeshId = split(Mesh.TextureId, '=')[2]
-    else
-        MeshId = split(Mesh.TextureId, 'rbxassetid://')[1]
-    end
-    return MeshId
-end
-
 Functions = {
+    GetMeshId = function(mesh)
+        if not mesh:IsA("SpecialMesh") then
+            return "Error - Param \"mesh\" is not a ClassType of \"SpecialMesh\""
+        end
+        if split(mesh.TextureId, '=')[2] ~= nil then
+            MeshId = split(mesh.TextureId, '=')[2]
+        else
+            MeshId = split(mesh.TextureId, 'rbxassetid://')[1]
+        end
+        return MeshId
+    end,
     GetHats = function()
         local Hats = {}
         for _,v in pairs(Character:GetChildren()) do
@@ -44,10 +46,11 @@ Functions = {
                     print("Duplicate found")
                 end
 
-                ID = GetMeshId(Mesh)
+                ID = Functions.GetMeshId(Mesh)
                 
                 Hats[tostring(ID)] = {
                     Name = v.Name,
+                    MeshLink = "https://www.roblox.com/library/" .. ID,
                     Object = v
                 }
             end
@@ -65,10 +68,10 @@ Functions = {
                     else
                         Mesh = Hat:WaitForChild("Handle"):FindFirstChild("SpecialMesh")
                     end
-                    ID = GetMeshId(Mesh)
+                    ID = Functions.GetMeshId(Mesh)
 
                     if Hat.Name == v.Name and ID == i then
-                        print("Test")
+                        Hat.Name = i
                     end
                 end
             end
@@ -76,4 +79,4 @@ Functions = {
     end
 }
 
-return Functions
+return print(Functions.FindAccessories())
