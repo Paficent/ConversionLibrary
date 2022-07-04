@@ -6,11 +6,12 @@
 ]]
 
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 
-local Mesh, ID, MeshId, Table
+local Mesh, ID, MeshId, TextureId, Handle, Table
 
 local function split(Input, Seperator) -- Not my function :)
     Table = {}
@@ -21,36 +22,68 @@ local function split(Input, Seperator) -- Not my function :)
 end
 
 Functions = {
-    GetMeshId = function(mesh)
-        if not mesh:IsA("SpecialMesh") then
-            return "Error - Param \"mesh\" is not a ClassType of \"SpecialMesh\""
-        end
-        if split(mesh.TextureId, '=')[2] ~= nil then
-            MeshId = split(mesh.TextureId, '=')[2]
+    GetMeshId = function(Object)
+        if Object:IsA("SpecialMesh") then
+            ID = Object.MeshId
+        elseif Object:IsA("Part") then
+            ID = Object:FindFirstChildWhichIsA("SpecialMesh").MeshId
+        elseif Object:IsA("MeshPart") then
+            ID = Object.MeshId
+        elseif Object:IsA("Accessory") then
+            ID = Object:WaitForChild("Handle"):FindFirstChildWhichIsA("SpecialMesh").MeshId
         else
-            MeshId = split(mesh.TextureId, 'rbxassetid://')[1]
+            return 'Error - Param "Object" [1] is not a ClassType of "SpecialMesh" or "Part" or "Accessory" or "MeshPart"'
+        end
+
+        if split(ID, '=')[2] ~= nil then
+            MeshId = split(ID, '=')[2]
+        else
+            MeshId = split(ID, 'rbxassetid://')[1]
         end
         return MeshId
+    end,
+    GetTextureId = function(Object)
+        if Object:IsA("SpecialMesh") then
+            ID = Object.TextureId
+        elseif Object:IsA("Part") then
+            ID = Object:FindFirstChildWhichIsA("SpecialMesh").TextureId
+        elseif Object:IsA("MeshPart") then
+            ID = Object.TextureID
+        elseif Object:IsA("Accessory") then
+            ID = Object:WaitForChild("Handle"):FindFirstChildWhichIsA("SpecialMesh").TextureId
+
+        else
+            return 'Error - Param "Object" [1] is not a ClassType of "SpecialMesh" or "Part" or "Accessory" or "MeshPart"'
+        end
+
+        if split(ID, '=')[2] ~= nil then
+            TextureId = split(ID, '=')[2]
+        else
+            TextureId = split(ID, 'rbxassetid://')[1]
+        end
+        return TextureId
     end,
     GetHats = function()
         local Hats = {}
         for _,v in pairs(Character:GetChildren()) do
             if v:IsA("Accessory") then
-                if v:WaitForChild("Handle"):FindFirstChild("SpecialMesh") == nil then
-                    Mesh = v:WaitForChild("Handle"):FindFirstChild("Mesh")
-                else
-                    Mesh = v:WaitForChild("Handle"):FindFirstChild("SpecialMesh")
-                end
+                Handle = v:WaitForChild("Handle")
+                Mesh = Handle:FindFirstChildWhichIsA("SpecialMesh")
         
                 if Hats[v.Name] then
                     print("Duplicate found")
                 end
 
-                ID = Functions.GetMeshId(Mesh)
+                MeshId = Functions.GetMeshId(Mesh)
+                TextureId = Functions.GetTextureId(Mesh)
                 
-                Hats[tostring(ID)] = {
+                Hats[tostring(TextureId)] = {
                     Name = v.Name,
-                    MeshLink = "https://www.roblox.com/library/" .. ID,
+                    MeshId = MeshId,
+                    MeshLink = "https://www.roblox.com/library/" .. MeshId,
+                    TextureId = TextureId,
+                    TextureLink = "https://www.roblox.com/library/" .. TextureId,
+                    Size = Handle.Size,
                     Object = v
                 }
             end
@@ -58,22 +91,50 @@ Functions = {
         return Hats
     end,
     RenameHats = function()
-        local Hats = Functions.GetHats()
+        local Hats = Functions.GetHats() -- Get's table of hats
 
         for i,v in pairs(Hats) do
             for _,Hat in pairs(Character:GetChildren()) do
                 if Hat:IsA("Accessory") then
-                    if Hat:WaitForChild("Handle"):FindFirstChild("SpecialMesh") == nil then
-                        Mesh = Hat:WaitForChild("Handle"):FindFirstChild("Mesh")
-                    else
-                        Mesh = Hat:WaitForChild("Handle"):FindFirstChild("SpecialMesh")
-                    end
-                    ID = Functions.GetMeshId(Mesh)
+                    Handle = v:WaitForChild("Handle")
+                    Mesh = Handle:FindFirstChildWhichIsA("SpecialMesh")
+
+                    ID = Functions.GetMeshId(Mesh) -- Get's the mesh's TextureId
 
                     if Hat.Name == v.Name and ID == i then
                         Hat.Name = i
                     end
                 end
+            end
+        end
+    end,
+    AntiRagDoll = function()
+        for _,v in pairs(Character:GetDescendants()) do
+            if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then -- Most ragdoll games use these two constraints, finds them and destroys them
+                v:Destroy()
+            end
+        end
+    end,
+    Noclip = function(Object)
+        local obj = Object or Character
+        if obj == Object then
+            RunService.Stepped:Connect(function()
+                obj.CanCollide = false
+            end)
+        else
+            RunService.Stepped:Connect(function()
+                for _,v in pairs(obj:GetDescendants()) do
+                    if v:IsA("BasePart") or v:IsA("MeshPart") or v:IsA("Part") then
+                        v.CanCollide = false
+                    end
+                end
+            end)
+        end
+    end,
+    RemoveMesh = function(Object)
+        for _,v in pairs(Object:GetDescendants()) do
+            if v:IsA("SpecialMesh") then
+                v:Destroy()
             end
         end
     end
