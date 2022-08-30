@@ -1,6 +1,6 @@
 --[[
     Created by Moon#9601 (858557060563992617) / https://github.com/0x580x540x43
-    Updated on 7/4/22
+    Updated on 8/30/22
 
     This script is not optimized do not hurt me, I will optimize it later
 ]]
