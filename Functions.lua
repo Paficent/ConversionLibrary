@@ -11,9 +11,9 @@ local RunService = game:GetService("RunService")
 local LocalPlayer = Players.LocalPlayer
 local Character = LocalPlayer.Character
 
-local Mesh, ID, MeshId, TextureId, Handle, Table
+local Mesh, ID, MeshId, TextureId, Handle, Table -- Locals that should be initiated "globally" to allow for slight optimizations -- all are nil
 
-local function split(Input, Seperator) -- Not my function :)
+local function split(Input, Seperator) -- I didn't make this because I am lazy lick my clit
     Table = {}
     for str in string.gmatch(Input, "([^"..Seperator.."]+)") do
         table.insert(Table, str)
@@ -22,7 +22,7 @@ local function split(Input, Seperator) -- Not my function :)
 end
 
 Functions = {
-    GetMeshId = function(Object)
+    GetMeshId = function(Object) -- Returns a "SpecialMesh" or a "Part" or a "MeshPart" or an "Accesory"'s mesh id.
         if Object:IsA("SpecialMesh") then
             ID = Object.MeshId
         elseif Object:IsA("Part") then
@@ -42,7 +42,7 @@ Functions = {
         end
         return MeshId
     end,
-    GetTextureId = function(Object)
+    GetTextureId = function(Object) -- Returns a "SpecialMesh" or a "Part" or a "MeshPart" or an "Accesory"'s texture id.
         if Object:IsA("SpecialMesh") then
             ID = Object.TextureId
         elseif Object:IsA("Part") then
@@ -62,7 +62,7 @@ Functions = {
         end
         return TextureId
     end,
-    GetHats = function()
+    GetHats = function() -- returns a list of hats
         local Hats = {}
         for _,v in pairs(Character:GetChildren()) do
             if v:IsA("Accessory") then
@@ -88,7 +88,7 @@ Functions = {
         end
         return Hats
     end,
-    RenameHats = function()
+    RenameHats = function() -- [void]
         local Hats = Functions.GetHats() -- Get's table of hats
 
         for i,v in pairs(Hats) do
@@ -105,14 +105,14 @@ Functions = {
             end
         end
     end,
-    AntiRagDoll = function()
+    AntiRagDoll = function() -- [void]
         for _,v in pairs(Character:GetDescendants()) do
             if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then -- Most ragdoll games use these two constraints, finds them and destroys them
                 v:Destroy()
             end
         end
     end,
-    Noclip = function(Object)
+    Noclip = function(Object)  -- Object is type "nil" for nocliping the character or a "Part" [void]
         local obj = Object or Character
         if obj == Object then
             RunService.Stepped:Connect(function()
@@ -128,7 +128,7 @@ Functions = {
             end)
         end
     end,
-    RemoveMesh = function(Object)
+    RemoveMesh = function(Object) -- Object is a "SpecialMesh" [void]
         for _,v in pairs(Object:GetDescendants()) do
             if v:IsA("SpecialMesh") then
                 v:Destroy()
