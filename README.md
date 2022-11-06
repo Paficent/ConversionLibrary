@@ -5,12 +5,12 @@ Created by `Moon#9601 (858557060563992617)`
 
 Credits to `StrokeThePea` for his Align functions
 
-## Getting the library
-
 ```lua
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x580x540x43/ConversionLibrary/main/Functions.lua"))()
 ```
-## Hat functions
+
+
+## Functions
 
 
 ### GetMeshId
@@ -70,9 +70,6 @@ Noclips an object (if `Object` is a Part) or your entire character if `Object` i
 <function> Functions.RemoveMesh(Object: Part)
 ```
 Destroys all meshes that are children of the Part `Object`
-
-
-## Align functions
 
 ### CFrameAlign
 ```lua
