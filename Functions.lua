@@ -141,7 +141,7 @@ Functions.Noclip = function(Object: Part?)  -- Object is type "nil" for noclipin
     end
 end
 
-Functions.RemoveMesh = function(Object: SpecialMesh)
+Functions.RemoveMesh = function(Object: Part)
     for _,v in pairs(Object:GetDescendants()) do
         if v:IsA("SpecialMesh") then
             v:Destroy()
