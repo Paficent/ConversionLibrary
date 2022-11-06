@@ -15,21 +15,21 @@ local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x5
 
 ### GetMeshId
 ```lua
-<function> Functions.GetMeshId(<SpecialMesh, Part, MeshPart, Accessory> Object)
+<function> Functions.GetMeshId(Object: SpecialMesh | Part | MeshPart | Accessory)
 ```
 Returns the `ID` of the Mesh being used in the `Object`, without `rbxassetid://`
 
 
 ### GetTextureId
 ```lua
-<function> Functions.GetTextureId(union<SpecialMesh, Part, MeshPart, Accessory> Object)
+<function> Functions.GetTextureId(Object: SpecialMesh | Part | MeshPart | Accessory)
 ```
 Returns the `ID` of the Texture being used in the `Object`, without `rbxassetid://`
 
 
 ### GetHats
 ```lua
-<function> Functions.GetHats(<void>)
+<function> Functions.GetHats()
 ```
 Returns the a table of all the Hats Parented to your Character formatted like
 ```lua
@@ -48,26 +48,26 @@ local Hats = {
 
 ### RenameHats
 ```lua
-<function> Functions.RenameHats(<void>)
+<function> Functions.RenameHats()
 ```
 Renamed the Characters accessories by their `TextureId`
 
 
 ### AntiRagDoll
 ```lua
-<function> Functions.AntiRagDoll(<void>)
+<function> Functions.AntiRagDoll()
 ```
 Attempts to disable ragdoll on your character in games that have ragdoll
 
 ### Noclip
 ```lua
-<function> Functions.Noclip(union<Part, nil> Object)
+<function> Functions.Noclip(Object: Part?)
 ```
 Noclips an object (if `Object` is a Part) or your entire character if `Object` is nil
 
 ### RemoveMesh
 ```lua
-<function> Functions.RemoveMesh(<Part> Object)
+<function> Functions.RemoveMesh(Object: Part)
 ```
 Destroys all meshes that are children of the Part `Object`
 
@@ -76,7 +76,7 @@ Destroys all meshes that are children of the Part `Object`
 
 ### CFrameAlign
 ```lua
-<function> Functions.CFrameAlign(<Part> Part0, <Part> Part1, <CFrame?> Position, <CFrame?> Angle)
+<function> Functions.CFrameAlign(Part0: Part, Part1: Part, Position: CFrame?, Angle: CFrame?)
 ```
 Aligns `Part0` and `Part1` with the position `Positon` and angle `Angle`, must be called in a loop.
 
@@ -94,7 +94,7 @@ Hat:BreakJoints()
 
 ### Align
 ```lua
-<function> Functions.Align(<Part> Part0, <Part> Part1, <Vector3?> Position, <Vector3?> Orientation, <bool?> MaxAlign)
+<function> Functions.Align(Part0: Part, Part1: Part, Position: Vector3?, Orientation: Vector3?, MaxAlign: boolean?)
 ```
 Aligns `Part0` and `Part1` with the position `Positon` and angle `Angle`.
 
