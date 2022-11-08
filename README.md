@@ -10,6 +10,16 @@ local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x5
 ```
 
 
+#### Functions are formatted via
+
+```lua
+<type> Functions.FunctionName(MultipleTypes: Part | Accessory, OptionalArgument: CFrame?)
+
+-- 'FunctionName' is the name of the function
+-- 'MultipleTypes' is an argument that can support different types without breaking, in this example it would accept 'Part' or 'Accessory'
+-- 'OptionalArgument' is an argument that accepts 'nil' or 'CFrame' as a type
+```
+
 ## Functions
 
 
