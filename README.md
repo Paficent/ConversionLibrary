@@ -3,7 +3,7 @@ Luau library for converting FD Scripts into FE Scripts using reanimation
 
 Created by `Moon#9601 (858557060563992617)`
 
-Credits to `StrokeThePea` for his Align functions
+Credits to `StrokeThePea (https://github.com/StrokeThePea/)` for his Align functions
 
 ```lua
 local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x580x540x43/ConversionLibrary/main/Functions.lua"))()
