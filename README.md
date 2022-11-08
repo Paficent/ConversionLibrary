@@ -10,7 +10,7 @@ local Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/0x5
 ```
 
 
-#### Functions are formatted via
+#### Functions are formatted like
 
 ```lua
 <type> Functions.FunctionName(MultipleTypes: Part | Accessory, OptionalArgument: CFrame?)
