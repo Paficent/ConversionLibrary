@@ -2,7 +2,7 @@
 
 --[[
     Created by Moon#9601 (858557060563992617) / https://github.com/0x580x540x43
-    Updated on 11/6/22
+    Updated on 11/25/22
 
     This script is not optimized do not hurt me, I will optimize it later
 ]]
@@ -50,7 +50,7 @@ Functions.GetMeshId = function(Object: any) -- Returns a "SpecialMesh" or a "Par
 end
 
 Functions.GetTextureId = function(Object: any) -- Returns a "SpecialMesh" or a "Part" or a "MeshPart" or an "Accesory"'s texture id.
-    if Object:IsA("SpecialMesh") then
+    if Object:IsA("SpecialMesh") then -- This could be ignored / optimized in Luau but since exploit bytecode is converted to Luau it won't error returning a different type than the strict type system requires.
         ID = Object.TextureId
     elseif Object:IsA("Part") then
         ID = Object:FindFirstChildWhichIsA("SpecialMesh").TextureId
@@ -77,7 +77,6 @@ Functions.GetHats = function() -- returns a list of hats
             Handle = v:WaitForChild("Handle")
             Mesh = Handle:FindFirstChildWhichIsA("SpecialMesh") or Handle
     
-            
             if Hats[v.Name] then
                 print("Duplicate found")
             end
@@ -116,6 +115,16 @@ Functions.RenameHats = function()
     end
 end
 
+Functions.RemoveMesh = function(Object: Part) -- Removes the mesh of a part.
+    for _,v in pairs(Object:GetDescendants()) do
+        if v:IsA("SpecialMesh") then
+            v:Destroy()
+        end
+    end
+end
+
+-- Character Functions
+
 Functions.AntiRagDoll = function()
     for _,v in pairs(Character:GetDescendants()) do
         if v:IsA("HingeConstraint") or v:IsA("BallSocketConstraint") then -- Most ragdoll games use these two constraints, finds them and destroys them
@@ -141,16 +150,8 @@ Functions.Noclip = function(Object: Part?)  -- Object is type "nil" for noclipin
     end
 end
 
-Functions.RemoveMesh = function(Object: Part)
-    for _,v in pairs(Object:GetDescendants()) do
-        if v:IsA("SpecialMesh") then
-            v:Destroy()
-        end
-    end
-end
 
-
--- Aligning (Credits: StrokeThePea)
+-- Aligning (Thanks StrokeThePea for helping w/ CFrame Aligning)
 
 Functions.CFrameAlign = function(Part0: Part, Part1: Part, Position: CFrame?, Angle: CFrame?)
 	local CFrame_Position: CFrame = Position or CFrame.new()
@@ -160,7 +161,7 @@ Functions.CFrameAlign = function(Part0: Part, Part1: Part, Position: CFrame?, An
 	end
 end
 
-Functions.Align = function(Part0: Part, Part1: Part, Position: Vector3?, Orientation: Vector3?, MaxAlign: boolean?)
+Functions.Align = function(Part0: Part, Part1: Part, Position: Vector3?, Orientation: Vector3?, MaxAlign: boolean?) -- Aligns Part0 to Part1, with the optional Position and Orientation
 	local AlignPosition: AlignPosition = Instance.new("AlignPosition"); do
 		AlignPosition.MaxForce = 66666666666
 		AlignPosition.RigidityEnabled = true
